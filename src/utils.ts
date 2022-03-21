@@ -1,14 +1,18 @@
 export class FS<T extends Record<any, any>> {
   path: string;
   fs: any;
+  private cache: string | undefined;
   constructor(path: string) {
     this.fs = require("fs");
     this.path = path;
   }
 
   save(data: T) {
-    console.log(JSON.stringify(data));
-    this.fs.writeFileSync(this.path, JSON.stringify(data));
+    const stringified = JSON.stringify(data);
+    if (stringified !== this.cache) {
+      this.fs.writeFileSync(this.path, stringified);
+      this.cache = stringified;
+    }
   }
 
   load(): T | undefined {
