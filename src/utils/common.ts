@@ -1,3 +1,6 @@
+import { Types, SerializableTypes } from "./commonTypes";
+import { Rgb } from "./hex";
+
 export class FS<T extends Record<any, any>> {
   path: string;
   fs: any;
@@ -40,4 +43,20 @@ export const convertSerializableDict = <T>(_dict?: T): T | undefined => {
     }
   }
   return dict;
+};
+
+export const rebuildObj = (
+  dict: Record<string, [SerializableTypes, Types]>
+): Record<string, any> => {
+  const tempObj: Record<string, any> = {};
+  for (const [key, [value, type]] of Object.entries(dict)) {
+    if (type === "Date") {
+      tempObj[key] = new Date(value as string);
+    } else if (type === "Rgb") {
+      tempObj[key] = new Rgb(value as string);
+    } else {
+      tempObj[key] = value;
+    }
+  }
+  return tempObj;
 };
