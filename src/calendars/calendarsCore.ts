@@ -11,6 +11,7 @@ import {
   GetEventByKeyProps,
   CreateNewEventProps,
   UpdateExistingEventProps,
+  DeleteExistingEventProps,
 } from "./calendarsCoreType";
 
 export const accessCalendarOsascript = async <
@@ -146,18 +147,23 @@ export const accessCalendarOsascript = async <
       case "update_existing_event":
         const param_uee =
           that.param as SerializedType<UpdateExistingEventProps>;
-        const event = Calendars.byName(param_uee.calendar_name).events.byId(
+        const event_uee = Calendars.byName(param_uee.calendar_name).events.byId(
           param_uee.select_by_uid
         );
         for (const [key, value] of Object.entries(param_uee)) {
           if (key == "calendar_name" || key == "select_by_uid") {
             continue;
           }
-          event[key] = value;
+          event_uee[key] = value;
         }
         return [true];
       case "delete_existing_event":
-        break;
+        const param_dee =
+          that.param as SerializedType<DeleteExistingEventProps>;
+        Calendars.byName(param_dee.calendar_name)
+          .events.byId(param_dee.select_by_uid)
+          .delete();
+        return [true];
     }
   }, _that);
 

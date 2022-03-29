@@ -16,23 +16,20 @@ import { run } from "@jxa/run";
 // })();
 
 (async () => {
-  let result;
+  // let result;
   // result = await accessCalendarOsascript("get_calendar_names", {});
   // console.log(result);
-
   // result = await accessCalendarOsascript("get_calendar_by_key", {
   //   key: "name",
   //   value: "Busy",
   //   required_keys: ["name"],
   // });
   // console.log(result);
-
   // result = await accessCalendarOsascript("create_new_calendar", {
   //   name: "Test*********",
   //   description: "Test",
   // });
   // console.log(result);
-
   // result = await accessCalendarOsascript("get_event_by_key", {
   //   key: "summary",
   //   value: "NewEvent",
@@ -40,7 +37,6 @@ import { run } from "@jxa/run";
   //   required_keys: ["uid", "summary", "startDate"],
   // });
   // console.log(result);
-
   // const id = await accessCalendarOsascript("create_new_event", {
   //   calendar_name: "Events",
   //   summary: "NewEvent",
@@ -48,14 +44,18 @@ import { run } from "@jxa/run";
   //   endDate: new Date(),
   //   alldayEvent: false,
   // });
+  // console.log(id);
   // console.log(result);
-
   // result = await accessCalendarOsascript("update_existing_event", {
   //   calendar_name: "Events",
   //   select_by_uid: id,
   //   summary: "updatedNewEvent",
   // });
   // console.log(result);
+  // result = await accessCalendarOsascript("delete_existing_event", {
+  //   calendar_name: "Events",
+  //   select_by_uid: id,
+  // });
 })();
 
 //

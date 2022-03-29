@@ -66,8 +66,8 @@ export interface UpdateExistingEventProps extends ModifableCalendarEventProps {
 }
 
 export interface DeleteExistingEventProps {
-  key: "uid";
-  value: UID;
+  calendar_name: string;
+  select_by_uid: UID;
 }
 
 export type OsascriptCalendarPropsType<T> = T extends "get_calendar_names"
