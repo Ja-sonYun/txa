@@ -22,3 +22,7 @@ export type SerializableTypes =
   | number
   | boolean
   | Record<string, string | number | boolean>;
+
+export type SerializedType<T> = {
+  [K in keyof T]: T[K] extends Date ? string : T[K];
+};

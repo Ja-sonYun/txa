@@ -45,7 +45,7 @@ export const convertSerializableDict = <T>(_dict?: T): T | undefined => {
   return dict;
 };
 
-export const rebuildObj = (
+export const deserializeObj = (
   dict: Record<string, [SerializableTypes, Types]>
 ): Record<string, any> => {
   const tempObj: Record<string, any> = {};
@@ -59,4 +59,8 @@ export const rebuildObj = (
     }
   }
   return tempObj;
+};
+
+export const keyIsInAry = (ary: any[], key: string, val: any) => {
+  return ary.includes(key) ? val : undefined;
 };

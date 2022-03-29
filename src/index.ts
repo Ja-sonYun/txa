@@ -1,4 +1,19 @@
-import { accessCalendarOsascript } from "./calendars/calendarsOsascript";
+import "@jxa/global-type";
+import { accessCalendarOsascript } from "./calendars/calendarsCore";
+import { run } from "@jxa/run";
+
+// (async () => {
+//   await run(() => {
+//     const Calendar = Application("Calendar").calendars;
+//     const fromCalendar = Calendar.byName("Events");
+//     console.log(fromCalendar.name());
+//     const a = fromCalendar.events.whose({
+//       summary: "NewEvent",
+//     });
+//     // console.log(typeof a[0]);
+//     console.log(a.length);
+//   });
+// })();
 
 (async () => {
   let result;
@@ -8,6 +23,7 @@ import { accessCalendarOsascript } from "./calendars/calendarsOsascript";
   // result = await accessCalendarOsascript("get_calendar_by_key", {
   //   key: "name",
   //   value: "Busy",
+  //   required_keys: ["name"],
   // });
   // console.log(result);
 
@@ -17,12 +33,29 @@ import { accessCalendarOsascript } from "./calendars/calendarsOsascript";
   // });
   // console.log(result);
 
-  result = await accessCalendarOsascript("get_event_by_key", {
-    key: "name",
-    value: "花見",
-    calendar_name: "Family",
-  });
-  console.log(result);
+  // result = await accessCalendarOsascript("get_event_by_key", {
+  //   key: "summary",
+  //   value: "NewEvent",
+  //   calendar_name: "Events",
+  //   required_keys: ["uid", "summary", "startDate"],
+  // });
+  // console.log(result);
+
+  // const id = await accessCalendarOsascript("create_new_event", {
+  //   calendar_name: "Events",
+  //   summary: "NewEvent",
+  //   startDate: new Date(),
+  //   endDate: new Date(),
+  //   alldayEvent: false,
+  // });
+  // console.log(result);
+
+  // result = await accessCalendarOsascript("update_existing_event", {
+  //   calendar_name: "Events",
+  //   select_by_uid: id,
+  //   summary: "updatedNewEvent",
+  // });
+  // console.log(result);
 })();
 
 //

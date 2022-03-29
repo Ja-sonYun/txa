@@ -28,7 +28,7 @@ export interface CalendarEventProps {
   description?: string;
   startDate: Date;
   endDate: Date;
-  allDayEvent: boolean;
+  alldayEvent: boolean;
   location?: string;
   url?: string;
   status: CalendarStatus; // = none
@@ -37,9 +37,9 @@ export interface CalendarEventProps {
 export interface NewCalendarEventProps {
   summary: string;
   description?: string;
-  startDate?: Date;
-  endDate?: Date;
-  allDayEvent: boolean; // = false
+  startDate: Date;
+  endDate: Date;
+  alldayEvent: boolean; // = false
   location?: string;
   url?: string;
 }
