@@ -14,4 +14,3 @@ export declare type FieldsToObject<T> = {
 export declare type FieldsWithSerializableTypes<T> = {
     [K in keyof T]?: [T[K], Types];
 };
-//# sourceMappingURL=commonTypes.d.ts.map

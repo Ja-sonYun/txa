@@ -37,4 +37,3 @@ export declare type DeleteExistingTodoProps = {
 };
 export declare type OsascriptRemindersActionType<T> = T extends "get_list_names" ? GetListNamesProps : T extends "get_list_by_key" ? GetListByKeyProps : T extends "get_todo_by_key" ? GetTodoByKeyProps : T extends "get_todos_by_list_name" ? GetTodosByListName : T extends "create_new_todo" ? CreateNewTodoProps : T extends "update_existing_todo" ? UpdateExistingTodoProps : never;
 export declare type OsascriptRemindersReturnType<T> = T extends "get_list_names" ? Array<string> : T extends "get_list_by_key" ? RemindersListFields : T extends "get_todo_by_key" ? Array<RemindersTodoFields> : T extends "create_new_todo" ? string : T extends "update_existing_todo" ? boolean : never;
-//# sourceMappingURL=remindersCoreType.d.ts.map

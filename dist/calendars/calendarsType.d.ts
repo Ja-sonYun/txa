@@ -43,4 +43,3 @@ export interface NewCalendarEventFields {
 }
 export interface ModifableCalendarEventFields extends Partial<NewCalendarEventFields> {
 }
-//# sourceMappingURL=calendarsType.d.ts.map

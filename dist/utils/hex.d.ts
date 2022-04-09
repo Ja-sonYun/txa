@@ -7,4 +7,3 @@ export declare class Rgb {
     constructor(rgbHex: RgbColor);
 }
 export {};
-//# sourceMappingURL=hex.d.ts.map

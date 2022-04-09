@@ -37,4 +37,3 @@ export declare type DeleteExistingEventProps = {
 };
 export declare type OsascriptCalendarPropsType<T> = T extends "get_calendar_names" ? GetCalendarNamesProps : T extends "get_calendar_by_key" ? GetCalendarByKeyProps : T extends "create_new_calendar" ? CreateNewCalendarProps : T extends "get_events_by_key" ? GetEventByKeyProps : T extends "create_new_event" ? CreateNewEventProps : T extends "update_existing_event" ? UpdateExistingEventProps : T extends "delete_existing_event" ? DeleteExistingEventProps : never;
 export declare type OsascriptCalendarReturnType<T> = T extends "get_calendar_names" ? string[] : T extends "get_calendar_by_key" ? CalendarFields : T extends "create_new_calendar" ? boolean : T extends "get_events_by_key" ? CalendarEventFields[] : T extends "create_new_event" ? UID : T extends "update_existing_event" ? boolean : T extends "delete_existing_event" ? boolean : never;
-//# sourceMappingURL=calendarsCoreType.d.ts.map

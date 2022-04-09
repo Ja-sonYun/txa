@@ -28,4 +28,3 @@ export interface NewRemindersTodoFields extends Omit<RemindersTodoFields, "id" |
 }
 export interface ModifiableRemindersTodoFields extends Partial<Omit<RemindersTodoFields, "id" | "modificationDate">> {
 }
-//# sourceMappingURL=remindersType.d.ts.map
