@@ -102,16 +102,10 @@ const accessReminderOsascript = async (action, param) => {
             case "update_existing_todo":
                 const param_uet = that.param;
                 const reminders_list_obj = Reminders.lists[param_uet.list_name].reminders;
-                console.log(param_uet.select_by_id);
                 const todo = reminders_list_obj.byId(param_uet.select_by_id);
-                console.log("1");
                 const update_query = param_uet;
-                console.log("1");
                 delete update_query.select_by_id;
-                console.log("1");
                 delete update_query.list_name;
-                console.log("2");
-                console.log(update_query);
                 let result = false;
                 try {
                     for (const [key, value] of Object.entries(update_query)) {
