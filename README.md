@@ -33,6 +33,12 @@ TODO: add alarm
 
 ### glue
 
+```typescript
+export const accessReminderOsascript = async <T extends AllOsascriptRemindersAction>(
+  action: T,
+  param: OsascriptRemindersActionType<T>
+): Promise<OsascriptRemindersReturnType<T>>
+```
 | action | parameter | return |
 | ------ | --------- | ------ |
 | get_list_names | | |
