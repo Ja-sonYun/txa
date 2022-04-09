@@ -29,11 +29,16 @@ export type GetListByKeyProps =
     request_field: Array<keyof RemindersListFields>;
   };
 
-export type GetTodoByKeyProps = {
-  key: "id";
-  value: string;
-} & {
-  //   } //     value: string; //     key: "name"; // | {
+export type GetTodoByKeyProps = (
+  | {
+      key: "id";
+      value: string;
+    }
+  | {
+      key: "name";
+      value: string;
+    }
+) & {
   list_name: string;
   request_field: Array<keyof RemindersTodoFields>;
   max_size?: number;
@@ -67,13 +72,13 @@ export type OsascriptRemindersActionType<T> = T extends "get_list_names"
   ? GetTodoByKeyProps
   : T extends "get_todos_by_list_name"
   ? GetTodosByListName
-  : T extends "create_new_event"
+  : T extends "create_new_todo"
   ? CreateNewTodoProps
-  : T extends "update_existing_event"
+  : T extends "update_existing_todo"
   ? UpdateExistingTodoProps
-  : // : T extends "delete_existing_event"
-    // ? DeleteExistingTodoProps
-    never;
+  : never;
+// : T extends "delete_existing_event"
+// ? DeleteExistingTodoProps
 
 export type OsascriptRemindersReturnType<T> = T extends "get_list_names"
   ? Array<string>
@@ -81,10 +86,10 @@ export type OsascriptRemindersReturnType<T> = T extends "get_list_names"
   ? RemindersListFields
   : T extends "get_todo_by_key"
   ? Array<RemindersTodoFields>
-  : T extends "create_new_event"
+  : T extends "create_new_todo"
   ? string // id
-  : T extends "update_existing_event"
+  : T extends "update_existing_todo"
   ? boolean
-  : // : T extends "delete_existing_event"
-    // ? boolean
-    never;
+  : never;
+// : T extends "delete_existing_event"
+// ? boolean

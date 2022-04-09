@@ -52,6 +52,9 @@ export const accessReminderOsascript = async <
       props_type: Record<keyof T, Types>
     ): FieldsWithSerializableTypes<T> => {
       const buffer: FieldsWithSerializableTypes<T> = {};
+      if (obj === undefined) {
+        return buffer;
+      }
       requested_fields.forEach((key) => {
         buffer[key] = [obj[key](), props_type[key]];
       });
@@ -102,9 +105,11 @@ export const accessReminderOsascript = async <
         const reminders_list_obj_gtbk =
           Reminders.lists[param_gtbk.list_name].reminders;
         const todoObj: RemindersTodoObject = (() => {
-          switch (param_gtbk.value) {
+          switch (param_gtbk.key) {
             case "id":
               return reminders_list_obj_gtbk.byId(param_gtbk.value);
+            case "name":
+              return reminders_list_obj_gtbk[param_gtbk.value];
           }
         })();
         return [
@@ -154,9 +159,8 @@ export const accessReminderOsascript = async <
         );
         return [id, false, false];
       case "update_existing_todo":
-        // UPDATE_BY_ID
         const param_uet = that.param as UpdateExistingTodoProps;
-        const { reminders_list_obj } =
+        const reminders_list_obj =
           Reminders.lists[param_uet.list_name].reminders;
         const todo = reminders_list_obj.byId(param_uet.select_by_id);
         const update_query: Partial<UpdateExistingTodoProps> = param_uet;
