@@ -1,8 +1,6 @@
 ![npm-publish](https://github.com/ja-sonyun/txa/actions/workflows/npm-publish-github-packages.yml/badge.svg)
 ![version](https://img.shields.io/badge/version-1.0.9-blue)
 
-## My page
-
 # TXA(Typescript for apple Automation)
 
 Use jxa with typescript  
