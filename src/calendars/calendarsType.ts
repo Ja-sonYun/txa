@@ -1,4 +1,4 @@
-import { UID, CID, FieldsToObject, Types } from "../utils/commonTypes";
+import { UID, FieldsToObject, Types } from "../utils/commonTypes";
 import { Rgb } from "../utils/hex";
 
 export type CalendarStatus = "cancelled" | "confirmed" | "none" | "tentative";

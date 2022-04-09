@@ -31,9 +31,7 @@ import {
 /*
  * asd
  */
-export const accessCalendarOsascript = async <
-  T extends AllOsascriptCalendarsAction
->(
+const accessCalendarOsascript = async <T extends AllOsascriptCalendarsAction>(
   action: T,
   param: OsascriptCalendarPropsType<T>
 ): Promise<OsascriptCalendarReturnType<T>> => {
@@ -192,3 +190,5 @@ export const accessCalendarOsascript = async <
   }
   return result;
 };
+
+export default accessCalendarOsascript;

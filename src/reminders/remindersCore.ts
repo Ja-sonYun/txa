@@ -1,16 +1,9 @@
 import "@jxa/global-type";
 import { run } from "@jxa/run";
-import { UpdateExistingEventProps } from "../calendars/calendarsCoreType";
-import { CalendarSerializableTypeMap } from "../calendars/calendarsType";
-import { convertSerializableDict, deserializeObj } from "../utils/common";
-import {
-  Types,
-  SerializedType,
-  FieldsWithSerializableTypes,
-} from "../utils/commonTypes";
+import { deserializeObj } from "../utils/common";
+import { Types, FieldsWithSerializableTypes } from "../utils/commonTypes";
 import {
   AllOsascriptRemindersAction,
-  GetListNamesProps,
   GetListByKeyProps,
   OsascriptRemindersActionType,
   OsascriptRemindersReturnType,
@@ -29,9 +22,7 @@ import {
   NewRemindersTodoFields,
 } from "./remindersType";
 
-export const accessReminderOsascript = async <
-  T extends AllOsascriptRemindersAction
->(
+const accessReminderOsascript = async <T extends AllOsascriptRemindersAction>(
   action: T,
   param: OsascriptRemindersActionType<T>
 ): Promise<OsascriptRemindersReturnType<T>> => {
@@ -189,3 +180,5 @@ export const accessReminderOsascript = async <
   }
   return result;
 };
+
+export default accessReminderOsascript;
