@@ -2,6 +2,10 @@
 
 Use jxa with typescript  
 
+# Installation
+```
+npm install @ja-sonyun/txa
+```
 # Example
 ```typescript
 import txa from "@ja-sonyun/txa"
