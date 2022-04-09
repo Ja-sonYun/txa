@@ -157,8 +157,8 @@ await txa.Reminders("create_new_todo", {
 await txa.Reminders("update_existing_todo", {
   list_name: "GitHub",
   select_by_id: "x-apple-reminder://982A8652-5163-4D32-9C19-D33149A4C6B1",
-  name: "new name"
-// ... dueDate:Date, body:string, , priority:number, flagged:boolean
+  completed: true,
+// ... dueDate:Date, body:string, name:string, priority:number, flagged:boolean
 })
 // true
 ```
