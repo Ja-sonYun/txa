@@ -1,9 +1,15 @@
-# WrappedOsascriptInTypescript
+# TXA(Typescript for apple Automation)
 
-Use osascript with typescript  
+Use jxa with typescript  
 
-build with `npm build`  
-run with `npm jxa`  
+# Example
+```typescript
+import txa from "@ja-sonyun/txa"
+
+(async () => {
+  console.log(await txa.Reminders("get_list_names", {}))
+})();
+```
 
 # Supported Applications
 

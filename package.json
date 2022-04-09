@@ -1,10 +1,9 @@
 {
   "name": "@ja-sonyun/txa",
-  "type": "module",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
   },
-  "version": "1.0.4",
+  "version": "1.0.7",
   "repository": "git://github.com/Ja-sonYun/txa.git",
   "scripts": {
     "build": "tsc",
