@@ -1,4 +1,6 @@
 {
+  "name": "txa",
+  "version": "1.0.0",
   "scripts": {
     "build": "tsc",
     "jxa": "node ./dist/index.js"
@@ -12,5 +14,18 @@
     "@jxa/repl": "^1.3.4",
     "@jxa/run": "^1.3.4",
     "@jxa/types": "^1.3.4"
-  }
+  },
+  "description": "Use osascript with typescript",
+  "main": "./dist/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ja-sonYun/WrappedOsascriptInTypescript.git"
+  },
+  "keywords": ["jxa", "osascript", "typescript", "applescript"],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ja-sonYun/WrappedOsascriptInTypescript/issues"
+  },
+  "homepage": "https://github.com/Ja-sonYun/WrappedOsascriptInTypescript#readme"
 }
