@@ -1,5 +1,6 @@
 import "@jxa/global-type";
-import { accessCalendarOsascript } from "./calendars/calendarsCore";
+// import { accessCalendarOsascript } from "./calendars/calendarsCore";
+import { accessReminderOsascript } from "./reminders/remindersCore";
 import { run } from "@jxa/run";
 
 // (async () => {
@@ -17,60 +18,87 @@ import { run } from "@jxa/run";
 
 (async () => {
   let result;
-  result = await accessCalendarOsascript("get_calendar_names", {});
+  result = await accessReminderOsascript("get_list_names", {});
   console.log(result);
-  result = await accessCalendarOsascript("get_calendar_by_key", {
+
+  result = await accessReminderOsascript("get_list_by_key", {
     key: "name",
-    value: "Busy",
-    required_keys: ["name"],
+    value: "GitHub",
+    request_field: ["id", "name", "emblem"],
   });
   console.log(result);
-  // result = await accessCalendarOsascript("create_new_calendar", {
-  //   name: "Test",
-  //   description: "Test",
+
+  result = await accessReminderOsascript("get_todos_by_list_name", {
+    list_name: "GitHub",
+    request_field: ["id", "name"],
+    max_size: 3,
+  });
+  console.log(result);
+
+  // result = await accessReminderOsascript("get_list_by_key", {
+  //   key: "name",
+  //   value: "GitHub",
+  //   request_field: ["id", "name", "emblem"],
   // });
   // console.log(result);
-  const id = await accessCalendarOsascript("create_new_event", {
-    calendar_name: "Events",
-    summary: "NewEvent",
-    startDate: new Date(),
-    endDate: new Date(),
-    alldayEvent: false,
-  });
-  console.log(id);
-  // result = await accessCalendarOsascript("get_event_by_key", {
-  //   key: "summary",
-  //   value: "NewEvent",
-  //   calendar_name: "Events",
-  //   required_keys: ["uid", "summary", "startDate"],
-  // });
-  // console.log(result);
-  result = await accessCalendarOsascript("get_event_by_key", {
-    key: "uid",
-    value: id,
-    calendar_name: "Events",
-    required_keys: ["uid", "summary", "startDate"],
-  });
-  console.log(result);
-  result = await accessCalendarOsascript("get_event_by_key", {
-    key: "startDate",
-    value: new Date(),
-    calendar_name: "Busy",
-    required_keys: ["uid", "summary", "startDate"],
-    max_size: 2,
-  });
-  console.log(result);
-  result = await accessCalendarOsascript("update_existing_event", {
-    calendar_name: "Events",
-    select_by_uid: id,
-    summary: "updatedNewEvent",
-  });
-  console.log(result);
-  // result = await accessCalendarOsascript("delete_existing_event", {
-  //   calendar_name: "Events",
-  //   select_by_uid: id,
-  // });
 })();
+
+// (async () => {
+//   let result;
+//   result = await accessCalendarOsascript("get_calendar_names", {});
+//   console.log(result);
+//   result = await accessCalendarOsascript("get_calendar_by_key", {
+//     key: "name",
+//     value: "Busy",
+//     request_field: ["name"],
+//   });
+//   console.log(result);
+//   // result = await accessCalendarOsascript("create_new_calendar", {
+//   //   name: "Test",
+//   //   description: "Test",
+//   // });
+//   // console.log(result);
+//   const id = await accessCalendarOsascript("create_new_event", {
+//     calendar_name: "Events",
+//     summary: "NewEvent",
+//     startDate: new Date(),
+//     endDate: new Date(),
+//     alldayEvent: false,
+//   });
+//   console.log(id);
+//   // result = await accessCalendarOsascript("get_events_by_key", {
+//   //   key: "summary",
+//   //   value: "NewEvent",
+//   //   calendar_name: "Events",
+//   //   request_field: ["uid", "summary", "startDate"],
+//   // });
+//   // console.log(result);
+//   result = await accessCalendarOsascript("get_events_by_key", {
+//     key: "uid",
+//     value: id,
+//     calendar_name: "Events",
+//     request_field: ["uid", "summary", "startDate"],
+//   });
+//   console.log(result);
+//   result = await accessCalendarOsascript("get_events_by_key", {
+//     key: "startDate",
+//     value: new Date(),
+//     calendar_name: "Busy",
+//     request_field: ["uid", "summary", "startDate"],
+//     max_size: 2,
+//   });
+//   console.log(result);
+//   result = await accessCalendarOsascript("update_existing_event", {
+//     calendar_name: "Events",
+//     select_by_uid: id,
+//     summary: "updatedNewEvent",
+//   });
+//   console.log(result);
+//   // result = await accessCalendarOsascript("delete_existing_event", {
+//   //   calendar_name: "Events",
+//   //   select_by_uid: id,
+//   // });
+// })();
 
 //
 // import "@jxa/global-type";

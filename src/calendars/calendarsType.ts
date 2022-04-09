@@ -1,10 +1,10 @@
-import { UID, CID } from "../utils/commonTypes";
+import { UID, CID, FieldsToObject, Types } from "../utils/commonTypes";
 import { Rgb } from "../utils/hex";
 
 export type CalendarStatus = "cancelled" | "confirmed" | "none" | "tentative";
 
 // When inherit existing calendar
-export interface CalendarProps {
+export interface CalendarFields {
   name: string;
   color: Rgb;
   // calendarIdentifier: CID; // cid
@@ -12,17 +12,27 @@ export interface CalendarProps {
   description?: string;
 }
 
+export interface CalendarObject extends FieldsToObject<CalendarFields> {}
+
+export const CalendarSerializableTypeMap: Record<keyof CalendarFields, Types> =
+  {
+    name: "string",
+    color: "string",
+    writable: "boolean",
+    description: "string",
+  };
+
 // When creating new calendar
-export interface NewCalendarProps {
+export interface NewCalendarFields {
   name: string;
   color?: Rgb; // TODO: default color?
   description?: string;
   writable?: boolean; // = false
 }
 
-export type ModifiedCalendarProps = Partial<NewCalendarProps>;
+export interface ModifiedCalendarFields extends Partial<NewCalendarFields> {}
 
-export interface CalendarEventProps {
+export interface CalendarEventFields {
   uid: UID;
   summary: string;
   description?: string;
@@ -34,7 +44,25 @@ export interface CalendarEventProps {
   status: CalendarStatus; // = none
 }
 
-export interface NewCalendarEventProps {
+export const CalendarEventSerializableTypeMap: Record<
+  keyof CalendarEventFields,
+  Types
+> = {
+  uid: "string",
+  summary: "string",
+  description: "string",
+  startDate: "Date",
+  endDate: "Date",
+  alldayEvent: "boolean",
+  location: "string",
+  url: "string",
+  status: "string",
+};
+
+export interface CalendarEventObject
+  extends FieldsToObject<CalendarEventFields> {}
+
+export interface NewCalendarEventFields {
   summary: string;
   description?: string;
   startDate: Date;
@@ -44,4 +72,5 @@ export interface NewCalendarEventProps {
   url?: string;
 }
 
-export type ModifableCalendarEventProps = Partial<NewCalendarEventProps>;
+export interface ModifableCalendarEventFields
+  extends Partial<NewCalendarEventFields> {}

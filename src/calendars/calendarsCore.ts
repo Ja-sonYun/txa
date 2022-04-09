@@ -1,7 +1,12 @@
 import "@jxa/global-type";
 import { run } from "@jxa/run";
 import { convertSerializableDict, deserializeObj } from "../utils/common";
-import { Types, SerializedType } from "../utils/commonTypes";
+import {
+  Types,
+  SerializedType,
+  FieldsWithSerializableTypes,
+} from "../utils/commonTypes";
+import { Rgb } from "../utils/hex";
 import {
   AllOsascriptCalendarsAction,
   OsascriptCalendarReturnType,
@@ -13,6 +18,15 @@ import {
   UpdateExistingEventProps,
   DeleteExistingEventProps,
 } from "./calendarsCoreType";
+import {
+  CalendarEventFields,
+  CalendarEventObject,
+  CalendarEventSerializableTypeMap,
+  CalendarFields,
+  CalendarObject,
+  CalendarSerializableTypeMap,
+  NewCalendarEventFields,
+} from "./calendarsType";
 
 /*
  * asd
@@ -33,9 +47,18 @@ export const accessCalendarOsascript = async <
   const [result, is_obj = false, is_ary = false] = await run<
     [OsascriptCalendarReturnType<T>, boolean]
   >((that: typeof _that) => {
-    // declare inner fuctions under here
+    const zipObject = <T, O extends Record<keyof T, any>>(
+      requested_fields: Array<keyof T>,
+      obj: O,
+      props_type: Record<keyof T, Types>
+    ): FieldsWithSerializableTypes<T> => {
+      const buffer: FieldsWithSerializableTypes<T> = {};
+      requested_fields.forEach((key) => {
+        buffer[key] = [obj[key](), props_type[key]];
+      });
+      return buffer;
+    };
 
-    // =================================
     const Calendar = Application("Calendar");
     const Calendars = Calendar.calendars;
 
@@ -50,7 +73,7 @@ export const accessCalendarOsascript = async <
         return [buffer];
       case "get_calendar_by_key":
         const param_gcbk = that.param as GetCalendarByKeyProps;
-        const foundedCalendar_gcbk = (() => {
+        const foundedCalendar_gcbk: CalendarObject = (() => {
           switch (param_gcbk.key) {
             // case "cid":
             //   return Calendars.byId[param_gcbk.value];
@@ -60,37 +83,28 @@ export const accessCalendarOsascript = async <
         })();
         // TODO: currently didn't consider the calendars that have duplicated name
         return [
-          {
-            name: param_gcbk.required_keys.includes("name")
-              ? [foundedCalendar_gcbk.name(), "string"]
-              : undefined,
-            color: param_gcbk.required_keys.includes("color")
-              ? [foundedCalendar_gcbk.color(), "Rgb"]
-              : undefined,
-            writable: param_gcbk.required_keys.includes("writable")
-              ? [foundedCalendar_gcbk.writable(), "boolean"]
-              : undefined,
-            description: param_gcbk.required_keys.includes("description")
-              ? [foundedCalendar_gcbk.description(), "string"]
-              : undefined,
-          },
+          zipObject<CalendarFields, CalendarObject>(
+            param_gcbk.request_field,
+            foundedCalendar_gcbk,
+            CalendarSerializableTypeMap
+          ),
           true,
         ];
       // Calendar
       case "create_new_calendar":
         // TODO: not working yet
         const param_cnc = that.param as CreateNewCalendarProps;
-        const result = Calendar.Calendar({
+        const newCalendarInfo: CreateNewCalendarProps = {
           name: param_cnc.name,
-          color: param_cnc.color ?? "(0, 0, 0)",
+          color: param_cnc.color ?? ("(0, 0, 0)" as unknown as Rgb),
           description: param_cnc.description ?? undefined,
           writable: param_cnc.writable ?? true,
-        });
+        };
+        const result = Calendar.Calendar(newCalendarInfo);
         return [result, true];
-      case "get_event_by_key":
+      case "get_events_by_key":
         const param_gebk = that.param as GetEventByKeyProps;
         const fromCalendar_gebk = Calendars.byName(param_gebk.calendar_name);
-        console.log(param_gebk.value);
         const foundedEvent = (() => {
           switch (param_gebk.key) {
             case "uid":
@@ -114,44 +128,25 @@ export const accessCalendarOsascript = async <
               return fromCalendar_gebk.events.whose(key);
           }
         })();
-        console.log(typeof foundedEvent);
         const buf: any = [];
         let max_size = param_gebk.key === "uid" ? 1 : foundedEvent.length;
         if (param_gebk.max_size && max_size > param_gebk.max_size) {
           max_size = param_gebk.max_size;
         }
         for (let i = 0; i < max_size; i++) {
-          const event =
+          const event: CalendarEventObject =
             param_gebk.key === "uid" ? foundedEvent : foundedEvent[i];
-          buf.push({
-            uid: param_gebk.required_keys.includes("uid")
-              ? [event.uid(), "string"]
-              : undefined,
-            summary: param_gebk.required_keys.includes("summary")
-              ? [event.summary(), "string"]
-              : undefined,
-            startDate: param_gebk.required_keys.includes("startDate")
-              ? [event.startDate(), "Date"]
-              : undefined,
-            endDate: param_gebk.required_keys.includes("endDate")
-              ? [event.endDate(), "Date"]
-              : undefined,
-            description: param_gebk.required_keys.includes("description")
-              ? [event.description(), "string"]
-              : undefined,
-            location: param_gebk.required_keys.includes("location")
-              ? [event.location(), "string"]
-              : undefined,
-            alldayEvent: param_gebk.required_keys.includes("alldayEvent")
-              ? [event.alldayEvent(), "boolean"]
-              : undefined,
-          });
+          const zippedObject = zipObject<
+            CalendarEventFields,
+            CalendarEventObject
+          >(param_gebk.request_field, event, CalendarEventSerializableTypeMap);
+          buf.push(zippedObject);
         }
         return [buf, true, true];
       // CalendarEvent
       case "create_new_event":
         const param_cne = that.param as SerializedType<CreateNewEventProps>;
-        const newEvent = Calendar.Event({
+        const newEventInfo: NewCalendarEventFields = {
           startDate: new Date(param_cne.startDate),
           endDate: new Date(param_cne.endDate),
           summary: param_cne.summary,
@@ -159,7 +154,8 @@ export const accessCalendarOsascript = async <
           location: param_cne.location ?? "",
           alldayEvent: param_cne.alldayEvent,
           url: param_cne.url ?? "",
-        });
+        };
+        const newEvent = Calendar.Event(newEventInfo);
         Calendars.byName(param_cne.calendar_name).events.push(newEvent);
         return [newEvent.id()];
       case "update_existing_event":

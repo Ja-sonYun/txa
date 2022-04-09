@@ -26,3 +26,12 @@ export type SerializableTypes =
 export type SerializedType<T> = {
   [K in keyof T]: T[K] extends Date ? string : T[K];
 };
+
+export type FieldsToObject<T> = {
+  [K in keyof T]-?: () => T[K];
+};
+
+// zip keyof t and type represented as string variable
+export type FieldsWithSerializableTypes<T> = {
+  [K in keyof T]?: [T[K], Types];
+};

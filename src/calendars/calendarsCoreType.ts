@@ -1,11 +1,11 @@
 import "@jxa/global-type";
 import { UID } from "../utils/commonTypes";
 import {
-  CalendarEventProps,
-  CalendarProps,
-  ModifableCalendarEventProps,
-  NewCalendarEventProps,
-  NewCalendarProps,
+  CalendarEventFields,
+  CalendarFields,
+  ModifableCalendarEventFields,
+  NewCalendarEventFields,
+  NewCalendarFields,
 } from "./calendarsType";
 
 export type AllOsascriptCalendarsAction =
@@ -14,13 +14,13 @@ export type AllOsascriptCalendarsAction =
   | "get_calendar_by_key"
   // Calendar
   | "create_new_calendar"
-  | "get_event_by_key"
+  | "get_events_by_key"
   // CalendarEvent
   | "create_new_event"
   | "update_existing_event"
   | "delete_existing_event";
 
-export interface GetCalendarNamesProps {}
+export type GetCalendarNamesProps = {};
 
 export type GetCalendarByKeyProps =
   // cannot find calendarIdentifer property.
@@ -29,10 +29,10 @@ export type GetCalendarByKeyProps =
   {
     key: "name";
     value: string;
-    required_keys: Array<keyof CalendarProps>;
+    request_field: Array<keyof CalendarFields>;
   };
 
-export interface CreateNewCalendarProps extends NewCalendarProps {}
+export type CreateNewCalendarProps = NewCalendarFields;
 
 export type GetEventByKeyProps = (
   | {
@@ -50,23 +50,23 @@ export type GetEventByKeyProps = (
     }
 ) & {
   calendar_name: string;
-  required_keys: Array<keyof CalendarEventProps>;
+  request_field: Array<keyof CalendarEventFields>;
   max_size?: number;
 };
 
-export interface CreateNewEventProps extends NewCalendarEventProps {
+export type CreateNewEventProps = NewCalendarEventFields & {
   calendar_name: string;
-}
+};
 
-export interface UpdateExistingEventProps extends ModifableCalendarEventProps {
+export type UpdateExistingEventProps = ModifableCalendarEventFields & {
   calendar_name: string;
   select_by_uid: UID;
-}
+};
 
-export interface DeleteExistingEventProps {
+export type DeleteExistingEventProps = {
   calendar_name: string;
   select_by_uid: UID;
-}
+};
 
 export type OsascriptCalendarPropsType<T> = T extends "get_calendar_names"
   ? GetCalendarNamesProps
@@ -74,7 +74,7 @@ export type OsascriptCalendarPropsType<T> = T extends "get_calendar_names"
   ? GetCalendarByKeyProps
   : T extends "create_new_calendar"
   ? CreateNewCalendarProps
-  : T extends "get_event_by_key"
+  : T extends "get_events_by_key"
   ? GetEventByKeyProps
   : T extends "create_new_event"
   ? CreateNewEventProps
@@ -87,11 +87,11 @@ export type OsascriptCalendarPropsType<T> = T extends "get_calendar_names"
 export type OsascriptCalendarReturnType<T> = T extends "get_calendar_names"
   ? string[]
   : T extends "get_calendar_by_key"
-  ? CalendarProps
+  ? CalendarFields
   : T extends "create_new_calendar"
   ? boolean // cid is unknown, return boolean
-  : T extends "get_event_by_key"
-  ? CalendarEventProps[]
+  : T extends "get_events_by_key"
+  ? CalendarEventFields[]
   : T extends "create_new_event"
   ? UID
   : T extends "update_existing_event"
