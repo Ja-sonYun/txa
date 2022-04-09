@@ -46,14 +46,12 @@ export type GetEventByKeyProps = (
   | {
       key: "startDate";
       value: Date;
-    }
-  | {
-      key: "endDate";
-      value: Date;
+      until?: Date;
     }
 ) & {
   calendar_name: string;
   required_keys: Array<keyof CalendarEventProps>;
+  max_size?: number;
 };
 
 export interface CreateNewEventProps extends NewCalendarEventProps {

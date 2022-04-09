@@ -14,6 +14,9 @@ import {
   DeleteExistingEventProps,
 } from "./calendarsCoreType";
 
+/*
+ * asd
+ */
 export const accessCalendarOsascript = async <
   T extends AllOsascriptCalendarsAction
 >(
@@ -87,6 +90,7 @@ export const accessCalendarOsascript = async <
       case "get_event_by_key":
         const param_gebk = that.param as GetEventByKeyProps;
         const fromCalendar_gebk = Calendars.byName(param_gebk.calendar_name);
+        console.log(param_gebk.value);
         const foundedEvent = (() => {
           switch (param_gebk.key) {
             case "uid":
@@ -95,16 +99,30 @@ export const accessCalendarOsascript = async <
               return fromCalendar_gebk.events.whose({
                 summary: param_gebk.value,
               });
-            // TODO: implement below
-            // case "startDate":
-            //   return Calendar.eventsFrom(param_gebk.value).first;
-            // case "endDate":
-            //   return Calendar.eventsTo(param_gebk.value).first;
+            case "startDate":
+              const key: {
+                startDate: { _greaterThan: Date };
+                endDate?: { _lessThanEquals: Date };
+              } = {
+                startDate: { _greaterThan: new Date(param_gebk.value) },
+              };
+              if (param_gebk.until) {
+                key["endDate"] = {
+                  _lessThanEquals: new Date(param_gebk.until),
+                };
+              }
+              return fromCalendar_gebk.events.whose(key);
           }
         })();
-        const buf = [];
-        for (let i = 0; i < foundedEvent.length; i++) {
-          const event = foundedEvent[i];
+        console.log(typeof foundedEvent);
+        const buf: any = [];
+        let max_size = param_gebk.key === "uid" ? 1 : foundedEvent.length;
+        if (param_gebk.max_size && max_size > param_gebk.max_size) {
+          max_size = param_gebk.max_size;
+        }
+        for (let i = 0; i < max_size; i++) {
+          const event =
+            param_gebk.key === "uid" ? foundedEvent : foundedEvent[i];
           buf.push({
             uid: param_gebk.required_keys.includes("uid")
               ? [event.uid(), "string"]
