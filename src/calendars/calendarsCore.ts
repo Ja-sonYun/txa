@@ -38,6 +38,10 @@ const accessCalendarOsascript = async <T extends AllOsascriptCalendarsAction>(
   const _that = {
     action: action,
     param: convertSerializableDict(param),
+    typemap: {
+      calendars: CalendarSerializableTypeMap,
+      calendars_event: CalendarEventSerializableTypeMap,
+    },
   };
 
   // type of result is 'Record<string, [any, Type]>' if isObj is true
@@ -84,7 +88,7 @@ const accessCalendarOsascript = async <T extends AllOsascriptCalendarsAction>(
           zipObject<CalendarFields, CalendarObject>(
             param_gcbk.request_field,
             foundedCalendar_gcbk,
-            CalendarSerializableTypeMap
+            that.typemap.calendars
           ),
           true,
         ];
@@ -137,7 +141,7 @@ const accessCalendarOsascript = async <T extends AllOsascriptCalendarsAction>(
           const zippedObject = zipObject<
             CalendarEventFields,
             CalendarEventObject
-          >(param_gebk.request_field, event, CalendarEventSerializableTypeMap);
+          >(param_gebk.request_field, event, that.typemap.calendars_event);
           buf.push(zippedObject);
         }
         return [buf, true, true];

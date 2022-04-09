@@ -12,8 +12,8 @@ export type AllOsascriptRemindersAction =
   | "get_todo_by_key"
   | "get_todos_by_list_name"
   | "create_new_todo"
-  | "update_existing_todo";
-// | "delete_existing_todo";
+  | "update_existing_todo"
+  | "delete_existing_todo";
 
 export type GetListNamesProps = {};
 
@@ -76,9 +76,9 @@ export type OsascriptRemindersActionType<T> = T extends "get_list_names"
   ? CreateNewTodoProps
   : T extends "update_existing_todo"
   ? UpdateExistingTodoProps
+  : T extends "delete_existing_event"
+  ? DeleteExistingTodoProps
   : never;
-// : T extends "delete_existing_event"
-// ? DeleteExistingTodoProps
 
 export type OsascriptRemindersReturnType<T> = T extends "get_list_names"
   ? Array<string>
@@ -90,6 +90,6 @@ export type OsascriptRemindersReturnType<T> = T extends "get_list_names"
   ? string // id
   : T extends "update_existing_todo"
   ? boolean
+  : T extends "delete_existing_event"
+  ? boolean
   : never;
-// : T extends "delete_existing_event"
-// ? boolean

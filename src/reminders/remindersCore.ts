@@ -11,6 +11,7 @@ import {
   GetTodosByListName,
   UpdateExistingTodoProps,
   CreateNewTodoProps,
+  DeleteExistingTodoProps,
 } from "./remindersCoreType";
 import {
   RemindersListObject,
@@ -151,21 +152,28 @@ const accessReminderOsascript = async <T extends AllOsascriptRemindersAction>(
         return [id, false, false];
       case "update_existing_todo":
         const param_uet = that.param as UpdateExistingTodoProps;
-        const reminders_list_obj =
+        const reminders_list_obj_uet =
           Reminders.lists[param_uet.list_name].reminders;
-        const todo = reminders_list_obj.byId(param_uet.select_by_id);
+        const todo_uet = reminders_list_obj_uet.byId(param_uet.select_by_id);
         const update_query: Partial<UpdateExistingTodoProps> = param_uet;
         delete update_query.select_by_id;
         delete update_query.list_name;
         let result = false;
         try {
           for (const [key, value] of Object.entries(update_query)) {
-            todo[key] = value;
+            todo_uet[key] = value;
           }
           result = true;
         } finally {
           return [result, false, false];
         }
+      case "delete_existing_todo":
+        const param_det = that.param as DeleteExistingTodoProps;
+        const reminders_list_obj_det =
+          Reminders.lists[param_det.list_name].reminders;
+        const todo_det = reminders_list_obj_det.byId(param_det.select_by_id);
+        todo_det.delete();
+        return [true, false, false];
     }
   }, _that);
 
