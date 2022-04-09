@@ -26,6 +26,21 @@ export const accessCalendarOsascript = async <T extends AllOsascriptCalendarsAct
 | create_new_event | calendar name and object with possible keys and values | uid of new event |
 | update_existing_event | calendar name and object with possible keys and new values | boolean |
 | delete_existing_event | calendar name and uid | boolean |
+TODO: add alarm
+
+
+## Reminders
+
+### glue
+
+| action | parameter | return |
+| ------ | --------- | ------ |
+| get_list_names | | |
+| get_list_by_key | | |
+| get_todos_by_key | | |
+| create_new_todo | | |
+| update_existing_todo | | |
+| delete_existing_todo | | |
 
 
 # TODO
