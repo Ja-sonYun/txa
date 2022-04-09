@@ -26,3 +26,8 @@ export const accessCalendarOsascript = async <T extends AllOsascriptCalendarsAct
 | create_new_event | calendar name and object with possible keys and values | uid of new event |
 | update_existing_event | calendar name and object with possible keys and new values | boolean |
 | delete_existing_event | calendar name and uid | boolean |
+
+
+# TODO
+
+wrap glue codes with class
