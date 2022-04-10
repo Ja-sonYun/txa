@@ -1,5 +1,5 @@
 ![npm-publish](https://github.com/ja-sonyun/txa/actions/workflows/npm-publish-github-packages.yml/badge.svg)
-![version](https://img.shields.io/badge/version-1.0.12-blue)
+![version](https://img.shields.io/badge/version-1.0.13-blue)
 
 # TXA(Typescript for apple Automation)
 
