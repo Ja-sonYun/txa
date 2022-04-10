@@ -61,6 +61,8 @@ const accessCalendarOsascript = async <T extends AllOsascriptCalendarsAction>(
       return buffer;
     };
 
+    const SystemEvents = Application("System Events");
+    SystemEvents.processes.whose({ name: "Calendar" })[0].visible = false;
     const Calendar = Application("Calendar");
     const Calendars = Calendar.calendars;
 

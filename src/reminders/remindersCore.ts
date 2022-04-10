@@ -53,6 +53,8 @@ const accessReminderOsascript = async <T extends AllOsascriptRemindersAction>(
       return buffer;
     };
 
+    const SystemEvents = Application("System Events");
+    SystemEvents.processes.whose({ name: "Reminders" })[0].visible = false;
     const Reminders = Application("Reminders");
     const get_under_reminders = (arg: "lists" | "reminders") => {
       const reminders_obj = Reminders[arg];
