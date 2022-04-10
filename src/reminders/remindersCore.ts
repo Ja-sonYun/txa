@@ -141,11 +141,13 @@ const accessReminderOsascript = async <T extends AllOsascriptRemindersAction>(
         const entry: NewRemindersTodoFields = {
           name: param_cnt.name,
           body: param_cnt.body ?? "",
-          dueDate: param_cnt.dueDate ? new Date(param_cnt.dueDate) : undefined,
           completed: param_cnt.completed ?? false,
           priority: param_cnt.priority ?? 0,
           flagged: param_cnt.flagged ?? false,
         };
+        if (param_cnt.dueDate) {
+          entry.dueDate = param_cnt.dueDate;
+        }
         const id = Reminders.lists[param_cnt.list_name].reminders.push(
           Reminders.Reminder(entry)
         );
