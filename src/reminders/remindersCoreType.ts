@@ -85,6 +85,8 @@ export type OsascriptRemindersReturnType<T> = T extends "get_list_names"
   : T extends "get_list_by_key"
   ? RemindersListFields
   : T extends "get_todo_by_key"
+  ? RemindersTodoFields
+  : T extends "get_todos_by_list_name"
   ? Array<RemindersTodoFields>
   : T extends "create_new_todo"
   ? string // id
