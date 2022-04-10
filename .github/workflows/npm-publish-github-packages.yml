@@ -17,7 +17,7 @@ jobs:
           node-version: 16
       - run: npm install
       - run: npm run build
-      
+
       - uses: actions/upload-artifact@master
         with:
           name: build_results
@@ -35,12 +35,14 @@ jobs:
         with:
           node-version: 16
           registry-url: https://npm.pkg.github.com/
-          
+
       - uses: actions/download-artifact@master
         with:
           name: build_results
           path: dist
-          
+
+      - run: ls
+
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
